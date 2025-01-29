@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Task Scheduler</string>
+
+    <!--  The application login screen  -->
+    <string name="title_log_in_to_the_app">Вход в приложение</string>
+    <string name="registration_button">Регистрация</string>
 </resources>

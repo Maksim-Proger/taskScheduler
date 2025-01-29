@@ -1,5 +1,6 @@
 package com.example.taskscheduler.presentation.screens
 
+import com.example.taskscheduler.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,13 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.taskscheduler.presentation.components.CustomOutlinedTextField
 import com.example.taskscheduler.presentation.components.CustomTopAppBar
-import com.example.taskscheduler.ui.theme.TaskSchedulerTheme
+import com.example.taskscheduler.presentation.theme.TaskSchedulerTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,10 +41,11 @@ fun LoginScreen() {
     Scaffold(
         topBar = {
             CustomTopAppBar(
-                title = "Вход",
+                title = stringResource(R.string.title_log_in_to_the_app),
+                titleButton = stringResource(R.string.registration_button),
                 scrollBehavior = scrollBehavior,
                 buttonSwitchToAnotherScreen = {
-
+                    // TODO: Настроить навигацию
                 }
             )
         }

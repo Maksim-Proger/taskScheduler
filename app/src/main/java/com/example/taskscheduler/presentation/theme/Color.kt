@@ -1,4 +1,4 @@
-package com.example.taskscheduler.ui.theme
+package com.example.taskscheduler.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
