@@ -1,6 +1,7 @@
 package com.example.taskscheduler.presentation.components
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.HowToReg
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -17,7 +18,9 @@ import androidx.compose.runtime.Composable
 @Composable
 fun CustomTopAppBar(
     title: String,
+    textButtonIsNotNeeded: Boolean,
     titleButton: String = "",
+    descriptionIconButton: String = "",
     scrollBehavior: TopAppBarScrollBehavior,
     buttonSwitchToAnotherScreen: () -> Unit = {}
 ) {
@@ -31,13 +34,24 @@ fun CustomTopAppBar(
             )
         },
         actions = {
-            TextButton(
-                onClick = buttonSwitchToAnotherScreen
-            ) {
-                Text(
-                    text = titleButton,
-                    style = MaterialTheme.typography.bodyMedium
-                )
+            if (!textButtonIsNotNeeded) {
+                TextButton(
+                    onClick = buttonSwitchToAnotherScreen
+                ) {
+                    Text(
+                        text = titleButton,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            } else {
+                IconButton(
+                    onClick = buttonSwitchToAnotherScreen
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Home,
+                        contentDescription = descriptionIconButton
+                    )
+                }
             }
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
