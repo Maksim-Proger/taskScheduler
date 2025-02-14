@@ -41,7 +41,8 @@ fun LoginScreen() {
     Scaffold(
         topBar = {
             CustomTopAppBar(
-                title = stringResource(R.string.title_log_in_to_the_app),
+                title = stringResource(R.string.title_app_login_screen),
+                textButtonIsNotNeeded = false,
                 titleButton = stringResource(R.string.registration_button),
                 scrollBehavior = scrollBehavior,
                 buttonSwitchToAnotherScreen = {
