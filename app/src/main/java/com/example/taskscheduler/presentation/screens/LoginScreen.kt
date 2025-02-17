@@ -1,10 +1,12 @@
 package com.example.taskscheduler.presentation.screens
 
-import com.example.taskscheduler.R
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,13 +25,22 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.taskscheduler.R
 import com.example.taskscheduler.presentation.components.CustomOutlinedTextField
+import com.example.taskscheduler.presentation.components.CustomTextButton
 import com.example.taskscheduler.presentation.components.CustomTopAppBar
+import com.example.taskscheduler.presentation.navigation.Route
 import com.example.taskscheduler.presentation.theme.TaskSchedulerTheme
+import com.example.taskscheduler.utils.navigateFunction
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    navController: NavHostController
+) {
 
     val (email, setEmail) = remember { mutableStateOf("") }
     val (password, setPassword) = remember { mutableStateOf("") }
@@ -42,12 +53,8 @@ fun LoginScreen() {
         topBar = {
             CustomTopAppBar(
                 title = stringResource(R.string.title_app_login_screen),
-                textButtonIsNotNeeded = false,
-                titleButton = stringResource(R.string.registration_button),
-                scrollBehavior = scrollBehavior,
-                buttonSwitchToAnotherScreen = {
-                    // TODO: Настроить навигацию
-                }
+                homeButtonIsNotNeeded = false,
+                scrollBehavior = scrollBehavior
             )
         }
     ) { innerPadding ->
@@ -77,21 +84,43 @@ fun LoginScreen() {
                 onValueChange = setPassword,
                 keyboardActions = KeyboardActions(
                     onDone = {
-                        keyboardController?.hide() // TODO: Переделать действие
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
                     }
                 ),
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
             )
+            Spacer(Modifier.padding(26.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                CustomTextButton(
+                    stringResource(R.string.button_registration_for_login_screen),
+                    onClickButton = {
+                        navigateFunction(navController, Route.RegistrationScreen.route)
+                    }
+                )
+                CustomTextButton(
+                    stringResource(R.string.button_log_in_for_login_screen),
+                    onClickButton = {
+                        /*TODO: Добавить проверку данных перед входом*/
+                        /*TODO: Добавить действие входа*/
+                    }
+                )
+            }
         }
 
     }
 }
 
-@Preview
+@Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun PreviewLoginScreen() {
     TaskSchedulerTheme {
-        LoginScreen()
+        val navController = rememberNavController()
+        LoginScreen(navController)
     }
 }

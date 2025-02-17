@@ -1,12 +1,17 @@
 package com.example.taskscheduler.presentation.screens
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -22,14 +27,21 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.taskscheduler.R
+import com.example.taskscheduler.presentation.components.CustomFloatingButton
 import com.example.taskscheduler.presentation.components.CustomOutlinedTextField
 import com.example.taskscheduler.presentation.components.CustomTopAppBar
+import com.example.taskscheduler.presentation.navigation.Route
 import com.example.taskscheduler.presentation.theme.TaskSchedulerTheme
+import com.example.taskscheduler.utils.navigateFunction
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegistrationScreen() {
+fun RegistrationScreen(
+    navController: NavHostController
+) {
 
     val (name, setName) = remember { mutableStateOf("") }
     val (email, setEmail) = remember { mutableStateOf("") }
@@ -43,26 +55,39 @@ fun RegistrationScreen() {
         topBar = {
             CustomTopAppBar(
                 title = stringResource(R.string.title_app_registration_screen),
-                descriptionIconButton = stringResource(R.string.return_to_the_app_login_screen),
-                textButtonIsNotNeeded = true,
-                scrollBehavior = scrollBehavior,
-                buttonSwitchToAnotherScreen = {
-                    // TODO: Настроить навигацию
+                homeButtonIsNotNeeded = false,
+                scrollBehavior = scrollBehavior
+            )
+        },
+        floatingActionButton = {
+            CustomFloatingButton(
+                imageIcon = Icons.Default.Done,
+                contentDescription = "",
+                textFloatingButton = stringResource(R.string.button_save_for_registration_screen),
+                expanded = true,
+                onButtonClick = {
+                    /*TODO: Добавить проверку данных перед сохранением*/
+                    /*TODO: Добавить действие сохранения в базу*/
+                    navigateFunction(navController, Route.LoginScreen.route)
                 }
             )
         },
-        floatingActionButton = {},
         floatingActionButtonPosition = FabPosition.End
     ) { innerPadding ->
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(innerPadding),
+            verticalArrangement = Arrangement.Center
         ) {
             CustomOutlinedTextField(
                 label = {
-                    Text("Введите свое имя")
+                    Text(
+                        stringResource(R.string.label_name_for_registration_screen),
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                 },
                 horizontalPadding = 16.dp,
                 value = name,
@@ -75,10 +100,14 @@ fun RegistrationScreen() {
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Next
             )
-            Spacer(modifier = Modifier.padding(7.dp))
+            Spacer(modifier = Modifier.padding(10.dp))
             CustomOutlinedTextField(
                 label = {
-                    Text("Введите свой Email")
+                    Text(
+                        stringResource(R.string.label_email_for_registration_screen),
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                 },
                 horizontalPadding = 16.dp,
                 value = email,
@@ -91,10 +120,14 @@ fun RegistrationScreen() {
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Next
             )
-            Spacer(modifier = Modifier.padding(7.dp))
+            Spacer(modifier = Modifier.padding(10.dp))
             CustomOutlinedTextField(
                 label = {
-                    Text("Введите свой пароль")
+                    Text(
+                        stringResource(R.string.label_password_for_registration_screen),
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                 },
                 horizontalPadding = 16.dp,
                 value = password,
@@ -102,19 +135,22 @@ fun RegistrationScreen() {
                 keyboardActions = KeyboardActions(
                     onDone = {
                         keyboardController?.hide()
+                        focusManager.clearFocus()
                     }
                 ),
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Next
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
             )
         }
     }
 }
 
-@Preview
+//@Preview(showBackground = true)
+@Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun PreviewRegistrationScreen() {
     TaskSchedulerTheme {
-        RegistrationScreen()
+        val navController = rememberNavController()
+        RegistrationScreen(navController)
     }
 }
