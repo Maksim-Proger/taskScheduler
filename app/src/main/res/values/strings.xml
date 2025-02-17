@@ -3,10 +3,17 @@
 
     <!--  The titles application screens  -->
     <string name="title_app_login_screen">Вход в приложение</string>
-    <string name="title_app_registration_screen">Вход в приложение</string>
+    <string name="title_app_registration_screen">Регистрация</string>
 
     <!--  The button titles  -->
-    <string name="registration_button">Регистрация</string>
+    <string name="button_registration_for_login_screen">Регистрация</string>
+    <string name="button_log_in_for_login_screen">Войти</string>
+    <string name="button_save_for_registration_screen">Зарегистрироваться</string>
+
+    <!--  Text resources  -->
+    <string name="label_name_for_registration_screen">Введите свое имя</string>
+    <string name="label_email_for_registration_screen">Введите свой Email</string>
+    <string name="label_password_for_registration_screen">Введите свой пароль</string>
 
     <!--  The description icon button  -->
     <string name="return_to_the_app_login_screen">Кнопка возврата на экран входа</string>
