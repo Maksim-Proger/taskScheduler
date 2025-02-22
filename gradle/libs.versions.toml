@@ -1,18 +1,22 @@
 [versions]
-agp = "8.7.1"
+agp = "8.7.3"
 kotlin = "2.0.0"
-coreKtx = "1.13.1"
+coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.8.6"
-activityCompose = "1.9.3"
-composeBom = "2024.10.00"
-materialIcons = "1.7.4"
+lifecycleRuntimeKtx = "2.8.7"
+activityCompose = "1.10.0"
+composeBom = "2025.02.00"
+materialIcons = "1.7.8"
 daggerHilt = "2.51.1"
 hiltNavigationCompose = "1.2.0"
+versionRetrofit = "2.10.0"
+versionConverterGson = "2.9.0"
 
 [libraries]
+retrofit = {group = "com.squareup.retrofit2", name = "retrofit", version.ref = "versionRetrofit"}
+converter-gson = {group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "versionConverterGson"}
 hilt-navigation-compose = {group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose"}
 hilt-compiler = {group = "com.google.dagger", name = "hilt-compiler", version.ref = "daggerHilt"}
 dagger-hilt = {group = "com.google.dagger", name = "hilt-android", version.ref = "daggerHilt"}

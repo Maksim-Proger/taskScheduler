@@ -11,7 +11,9 @@ import androidx.compose.ui.Modifier
 import com.example.taskscheduler.presentation.navigation.NavGraph
 import com.example.taskscheduler.presentation.navigation.Route
 import com.example.taskscheduler.presentation.theme.TaskSchedulerTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
