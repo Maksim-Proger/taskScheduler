@@ -1,12 +1,49 @@
 package com.example.taskscheduler.presentation.screens
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.example.taskscheduler.presentation.components.CustomNavigationDrawer
+import com.example.taskscheduler.presentation.components.CustomTopAppBar
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     navController: NavHostController
 ) {
+
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    CustomNavigationDrawer(navController) { drawerState, scope ->
+        Scaffold(
+            topBar = {
+                CustomTopAppBar(
+                    title = "Главный экран",
+                    homeButtonIsNotNeeded = false,
+                    scrollBehavior = scrollBehavior,
+                    buttonOpenNavigationDrawer = {
+                        scope.launch { drawerState.open() }
+                    }
+                )
+            }
+        ) { innerPadding ->
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+
+            }
+
+        }
+    }
 
 }
