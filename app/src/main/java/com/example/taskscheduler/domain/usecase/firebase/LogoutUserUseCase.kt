@@ -1,12 +1,12 @@
 package com.example.taskscheduler.domain.usecase.firebase
 
-import com.example.taskscheduler.domain.repository.FireBaseRepository
+import com.example.taskscheduler.domain.repository.firebase.AuthenticationRepository
 import javax.inject.Inject
 
 class LogoutUserUseCase @Inject constructor(
-    private val fireBaseRepository: FireBaseRepository
+    private val authenticationRepository: AuthenticationRepository
 ) {
     suspend operator fun invoke() {
-        fireBaseRepository.logoutUser()
+        authenticationRepository.logoutUser()
     }
 }

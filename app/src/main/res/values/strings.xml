@@ -4,6 +4,17 @@
     <!--  The titles application screens  -->
     <string name="title_app_login_screen">Вход в приложение</string>
     <string name="title_app_registration_screen">Регистрация</string>
+    <string name="title_app_main_screen">Главный экран</string>
+    <string name="title_app_accounting_screen">Бухгалтерия</string>
+    <string name="title_app_tasks_screen">Задачи</string>
+    <string name="title_app_important_events_screen">Важные события</string>
+    <string name="title_app_passwords_screen">Пароли</string>
+
+    <!--  DrawerItem  -->
+    <string name="accounting">Бухгалтерия</string>
+    <string name="tasks">Задачи</string>
+    <string name="important_events">Важные события</string>
+    <string name="passwords">Пароли</string>
 
     <!--  The button titles  -->
     <string name="button_registration_for_login_screen">Регистрация</string>

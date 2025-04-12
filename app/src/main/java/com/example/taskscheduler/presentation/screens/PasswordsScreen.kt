@@ -17,18 +17,15 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(
-    navController: NavHostController
-) {
+fun PasswordsScreen(navController: NavHostController) {
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-
 
     CustomNavigationDrawer(navController) { drawerState, scope ->
         Scaffold(
             topBar = {
                 CustomTopAppBar(
-                    title = stringResource(R.string.title_app_main_screen),
+                    title = stringResource(R.string.title_app_passwords_screen),
                     homeButtonIsNotNeeded = false,
                     scrollBehavior = scrollBehavior,
                     buttonOpenNavigationDrawer = {
@@ -48,5 +45,4 @@ fun MainScreen(
 
         }
     }
-
 }

@@ -1,4 +1,4 @@
-package com.example.taskscheduler.presentation.screens
+package com.example.taskscheduler.presentation.screens.system
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +13,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -25,6 +28,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.taskscheduler.R
@@ -33,11 +37,19 @@ import com.example.taskscheduler.presentation.components.CustomTextButton
 import com.example.taskscheduler.presentation.components.CustomTopAppBar
 import com.example.taskscheduler.presentation.navigation.Route
 import com.example.taskscheduler.presentation.theme.TaskSchedulerTheme
+import com.example.taskscheduler.presentation.viewmodels.AuthenticationViewModel
+import com.example.taskscheduler.presentation.viewmodels.SharedPreferencesViewModel
 import com.example.taskscheduler.utils.navigateFunction
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen(
+    navController: NavHostController,
+    authenticationViewModel: AuthenticationViewModel = hiltViewModel(),
+    sharedPreferencesViewModel: SharedPreferencesViewModel = hiltViewModel()
+) {
+    val userData by authenticationViewModel.userData.collectAsState()
+    val loginResult by authenticationViewModel.authResult.collectAsState()
 
     val (email, setEmail) = remember { mutableStateOf("") }
     val (password, setPassword) = remember { mutableStateOf("") }
@@ -45,6 +57,22 @@ fun LoginScreen(navController: NavHostController) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
+
+    LaunchedEffect(loginResult) {
+        loginResult?.let {
+            if (it.isSuccess) {
+                userData?.let { user ->
+                    sharedPreferencesViewModel.saveUserId(user.userId)
+                    sharedPreferencesViewModel.saveRegistrationFlag(true)
+                    navigateFunction(navController, Route.MainScreen.route)
+                }
+            } else {
+                val errorMessage = it.exceptionOrNull()?.message
+                println("Login failed: $errorMessage")
+            }
+            authenticationViewModel.resetAuthResult()
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -104,7 +132,7 @@ fun LoginScreen(navController: NavHostController) {
                     stringResource(R.string.button_log_in_for_login_screen),
                     onClickButton = {
                         /*TODO: Добавить проверку данных перед входом*/
-                        /*TODO: Добавить действие входа*/
+                        authenticationViewModel.loginUser(email, password)
                     }
                 )
             }

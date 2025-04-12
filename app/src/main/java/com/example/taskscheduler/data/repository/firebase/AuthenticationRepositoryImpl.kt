@@ -1,6 +1,7 @@
-package com.example.taskscheduler.data.repository
+package com.example.taskscheduler.data.repository.firebase
 
-import com.example.taskscheduler.domain.repository.FireBaseRepository
+import com.example.taskscheduler.domain.models.UserData
+import com.example.taskscheduler.domain.repository.firebase.AuthenticationRepository
 import com.example.taskscheduler.utils.NODE_LIST_USERS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -9,10 +10,10 @@ import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class FireBaseRepositoryImpl @Inject constructor(
+class AuthenticationRepositoryImpl @Inject constructor(
     private val databaseReference: DatabaseReference,
     private val firebaseAuth: FirebaseAuth
-) : FireBaseRepository {
+) : AuthenticationRepository {
 
     // Сохраняем данные пользователя в базу
     private suspend fun saveUserData(userId: String, name: String, email: String) {
@@ -39,9 +40,17 @@ class FireBaseRepositoryImpl @Inject constructor(
     }
 
     // Вход в аккаунт
-    override suspend fun loginUser(email: String, password: String) {
+    override suspend fun loginUser(email: String, password: String): UserData {
         try {
-            firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            val authResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            val user = authResult.user ?: throw Exception("User is null")
+
+            // Получение данных из Realtime Database
+            val snapshot = databaseReference.child(NODE_LIST_USERS).child(user.uid).get().await()
+            val name = snapshot.child("name").value as? String ?: "Unknown"
+            val emailFromDb = snapshot.child("email").value as? String ?: user.email.orEmpty()
+
+            return UserData(user.uid, name, emailFromDb)
         } catch (e: Exception) {
             val errorMessage = when (e) {
                 is FirebaseAuthInvalidUserException -> "User not found"
