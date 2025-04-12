@@ -1,4 +1,4 @@
-package com.example.taskscheduler.presentation.screens
+package com.example.taskscheduler.presentation.screens.system
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
@@ -21,7 +21,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
@@ -40,14 +39,14 @@ import com.example.taskscheduler.presentation.components.CustomOutlinedTextField
 import com.example.taskscheduler.presentation.components.CustomTopAppBar
 import com.example.taskscheduler.presentation.navigation.Route
 import com.example.taskscheduler.presentation.theme.TaskSchedulerTheme
-import com.example.taskscheduler.presentation.viewmodels.FireBaseViewModel
+import com.example.taskscheduler.presentation.viewmodels.AuthenticationViewModel
 import com.example.taskscheduler.utils.navigateFunction
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistrationScreen(
     navController: NavHostController,
-    viewModel: FireBaseViewModel = hiltViewModel()
+    authenticationViewModel: AuthenticationViewModel = hiltViewModel()
 ) {
 
     val (name, setName) = remember { mutableStateOf("") }
@@ -59,23 +58,20 @@ fun RegistrationScreen(
     val focusManager = LocalFocusManager.current
 
     // Состояние результата регистрации
-    val registrationResult by viewModel.authResult.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
+    val registrationResult by authenticationViewModel.authResult.collectAsState()
+    val isLoading by authenticationViewModel.isLoading.collectAsState()
 
     // Обработка результата регистрации
-    LaunchedEffect(Unit) {
-        viewModel.authResult.collect { result ->
-            result?.let {
-                when {
-                    it.isSuccess -> {
-                        navigateFunction(navController, Route.LoginScreen.route)
-                    }
-                    it.isFailure -> {
-                        val errorMessage = it.exceptionOrNull()?.message
-                        println("Registration failed: $errorMessage")
-                    }
-                }
+    LaunchedEffect(registrationResult) {
+        registrationResult?.let {
+            if (it.isSuccess) {
+                navigateFunction(navController, Route.LoginScreen.route)
+            } else {
+                val errorMessage = it.exceptionOrNull()?.message
+                println("Registration failed: $errorMessage")
             }
+
+            authenticationViewModel.resetAuthResult()
         }
     }
 
@@ -95,7 +91,7 @@ fun RegistrationScreen(
                 expanded = true,
                 onButtonClick = {
                     /*TODO: Добавить проверку данных перед сохранением*/
-                    viewModel.registerUser(email, password, name)
+                    authenticationViewModel.registerUser(email, password, name)
                 }
             )
         },

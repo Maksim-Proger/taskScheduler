@@ -2,6 +2,7 @@ package com.example.taskscheduler.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.taskscheduler.domain.models.UserData
 import com.example.taskscheduler.domain.usecase.firebase.LoginUserUseCase
 import com.example.taskscheduler.domain.usecase.firebase.LogoutUserUseCase
 import com.example.taskscheduler.domain.usecase.firebase.RegisterUserUseCase
@@ -12,21 +13,21 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FireBaseViewModel @Inject constructor(
+class AuthenticationViewModel @Inject constructor(
     private val registerUserUseCase: RegisterUserUseCase,
     private val loginUserUseCase: LoginUserUseCase,
     private val logoutUserUseCase: LogoutUserUseCase
 ): ViewModel() {
 
-    // Состояние результата аутентификации
     private val _authResult = MutableStateFlow<Result<Unit>?>(null)
     val authResult = _authResult.asStateFlow()
 
-    // Состояние загрузки
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
 
-    // Регистрация пользователя
+    private val _userData = MutableStateFlow<UserData?>(null)
+    val userData = _userData.asStateFlow()
+
     fun registerUser(email: String, password: String, name: String) {
         viewModelScope.launch {
             _isLoading.value = true
@@ -37,17 +38,16 @@ class FireBaseViewModel @Inject constructor(
                 _authResult.value = Result.failure(e) // Ошибка регистрации
             } finally {
                 _isLoading.value = false
-                _authResult.value = null // Сброс состояния после обработки
             }
         }
     }
 
-    // Вход пользователя
     fun loginUser(email: String, password: String) {
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                loginUserUseCase(email, password)
+                val user = loginUserUseCase(email, password)
+                _userData.value = user
                 _authResult.value = Result.success(Unit) // Успешный вход
             } catch (e: Exception) {
                 _authResult.value = Result.failure(e) // Ошибка входа
@@ -57,7 +57,10 @@ class FireBaseViewModel @Inject constructor(
         }
     }
 
-    // Выход пользователя
+    fun resetAuthResult() {
+        _authResult.value = null
+    }
+
     fun logoutUser() {
         viewModelScope.launch {
             _isLoading.value = true

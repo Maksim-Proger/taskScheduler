@@ -17,18 +17,15 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(
-    navController: NavHostController
-) {
+fun ImportantEventsScreen(navController: NavHostController) {
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-
 
     CustomNavigationDrawer(navController) { drawerState, scope ->
         Scaffold(
             topBar = {
                 CustomTopAppBar(
-                    title = stringResource(R.string.title_app_main_screen),
+                    title = stringResource(R.string.title_app_important_events_screen),
                     homeButtonIsNotNeeded = false,
                     scrollBehavior = scrollBehavior,
                     buttonOpenNavigationDrawer = {
