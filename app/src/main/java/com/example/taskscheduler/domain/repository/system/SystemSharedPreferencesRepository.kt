@@ -5,5 +5,9 @@ interface SystemSharedPreferencesRepository {
     fun getRegistrationFlag(): Boolean
     fun saveUserId(userId: String)
     fun getUserId(): String?
+    fun saveUserName(userName: String)
+    fun getUserName(): String?
+    fun saveUserEmail(userEmail: String)
+    fun getUserEmail(): String?
     fun clearUserData()
 }

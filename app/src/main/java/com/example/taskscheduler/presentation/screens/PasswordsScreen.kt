@@ -26,7 +26,7 @@ fun PasswordsScreen(navController: NavHostController) {
             topBar = {
                 CustomTopAppBar(
                     title = stringResource(R.string.title_app_passwords_screen),
-                    homeButtonIsNotNeeded = false,
+                    menuButtonNeed = true,
                     scrollBehavior = scrollBehavior,
                     buttonOpenNavigationDrawer = {
                         scope.launch { drawerState.open() }

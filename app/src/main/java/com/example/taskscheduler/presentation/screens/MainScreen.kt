@@ -23,13 +23,12 @@ fun MainScreen(
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
-
     CustomNavigationDrawer(navController) { drawerState, scope ->
         Scaffold(
             topBar = {
                 CustomTopAppBar(
                     title = stringResource(R.string.title_app_main_screen),
-                    homeButtonIsNotNeeded = false,
+                    menuButtonNeed = true,
                     scrollBehavior = scrollBehavior,
                     buttonOpenNavigationDrawer = {
                         scope.launch { drawerState.open() }

@@ -17,7 +17,8 @@ import androidx.compose.runtime.Composable
 @Composable
 fun CustomTopAppBar(
     title: String,
-    homeButtonIsNotNeeded: Boolean,
+    homeButtonNeed: Boolean = false,
+    menuButtonNeed: Boolean = false,
     descriptionIconButton: String = "",
     scrollBehavior: TopAppBarScrollBehavior,
     buttonOpenNavigationDrawer: () -> Unit = {},
@@ -32,7 +33,7 @@ fun CustomTopAppBar(
             )
         },
         actions = {
-            if (homeButtonIsNotNeeded) {
+            if (homeButtonNeed) {
                 IconButton(
                     onClick = buttonSwitchToAnotherScreen
                 ) {
@@ -45,12 +46,16 @@ fun CustomTopAppBar(
             }
         },
         navigationIcon = {
-            IconButton(
-                onClick = buttonOpenNavigationDrawer
-            ) {
-                Icon(
-                    Icons.Default.Menu, contentDescription = "Меню"
-                )
+            if (menuButtonNeed) {
+                IconButton(
+                    onClick = buttonOpenNavigationDrawer
+                ) {
+                    Icon(
+                        Icons.Default.Menu,
+                        contentDescription = "Меню",
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(

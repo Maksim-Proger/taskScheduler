@@ -79,7 +79,6 @@ fun RegistrationScreen(
         topBar = {
             CustomTopAppBar(
                 title = stringResource(R.string.title_app_registration_screen),
-                homeButtonIsNotNeeded = false,
                 scrollBehavior = scrollBehavior
             )
         },

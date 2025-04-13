@@ -26,7 +26,7 @@ fun TasksScreen(navController: NavHostController) {
             topBar = {
                 CustomTopAppBar(
                     title = stringResource(R.string.title_app_tasks_screen),
-                    homeButtonIsNotNeeded = false,
+                    menuButtonNeed = true,
                     scrollBehavior = scrollBehavior,
                     buttonOpenNavigationDrawer = {
                         scope.launch { drawerState.open() }
