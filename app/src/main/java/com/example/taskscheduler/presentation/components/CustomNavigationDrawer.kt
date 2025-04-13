@@ -15,6 +15,7 @@ import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,11 +25,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.taskscheduler.R
 import com.example.taskscheduler.domain.models.DrawerItem
 import com.example.taskscheduler.domain.models.UserData
 import com.example.taskscheduler.presentation.navigation.Route
+import com.example.taskscheduler.presentation.viewmodels.SharedPreferencesViewModel
 import com.example.taskscheduler.utils.navigateFunction
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -36,18 +39,17 @@ import kotlinx.coroutines.launch
 @Composable
 fun CustomNavigationDrawer(
     navController: NavHostController,
-    content: @Composable (DrawerState, CoroutineScope) -> Unit,
-//    userData: UserData
+    sharedPreferencesViewModel: SharedPreferencesViewModel = hiltViewModel(),
+    content: @Composable (DrawerState, CoroutineScope) -> Unit
 ) {
-    val items = listOf(
-        DrawerItem(direction = Route.AccountingScreen.route, icon = Icons.Default.Star, label = stringResource(R.string.accounting)),
-        DrawerItem(direction = Route.TasksScreen.route, icon = Icons.Default.Star, label = stringResource(R.string.tasks)),
-        DrawerItem(direction = Route.ImportantEventsScreen.route, icon = Icons.Default.Star, label = stringResource(R.string.important_events)),
-        DrawerItem(direction = Route.PasswordsScreen.route, icon = Icons.Default.Star, label = stringResource(R.string.passwords)),
-    )
+    val items = drawerItemList()
     var selectedItem by remember { mutableStateOf(items[0]) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+
+    val userId by sharedPreferencesViewModel.userId.collectAsState()
+    val userName by sharedPreferencesViewModel.userName.collectAsState()
+    val userEmail by sharedPreferencesViewModel.userEmail.collectAsState()
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -61,14 +63,16 @@ fun CustomNavigationDrawer(
                     contentAlignment = Alignment.CenterStart
                 ) {
                     Column {
-                        Text(
-                            text = userData.name,
-//                            style =
-                        )
-                        Text(
-                            text = userData.email
-//                            style =
-                        )
+                        userName?.let {
+                            Text(
+                                text = it
+                            )
+                        }
+                        userEmail?.let {
+                            Text(
+                                text = it
+                            )
+                        }
                     }
                 }
                 items.forEach { item ->
@@ -88,5 +92,32 @@ fun CustomNavigationDrawer(
     ) {
         content(drawerState, scope)
     }
+}
+
+@Composable
+private fun drawerItemList(): List<DrawerItem> {
+    val items = listOf(
+        DrawerItem(
+            direction = Route.AccountingScreen.route,
+            icon = Icons.Default.Star,
+            label = stringResource(R.string.accounting)
+        ),
+        DrawerItem(
+            direction = Route.TasksScreen.route,
+            icon = Icons.Default.Star,
+            label = stringResource(R.string.tasks)
+        ),
+        DrawerItem(
+            direction = Route.ImportantEventsScreen.route,
+            icon = Icons.Default.Star,
+            label = stringResource(R.string.important_events)
+        ),
+        DrawerItem(
+            direction = Route.PasswordsScreen.route,
+            icon = Icons.Default.Star,
+            label = stringResource(R.string.passwords)
+        ),
+    )
+    return items
 }
 

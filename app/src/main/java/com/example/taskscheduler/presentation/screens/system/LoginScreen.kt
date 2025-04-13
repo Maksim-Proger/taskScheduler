@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -63,6 +65,8 @@ fun LoginScreen(
             if (it.isSuccess) {
                 userData?.let { user ->
                     sharedPreferencesViewModel.saveUserId(user.userId)
+                    sharedPreferencesViewModel.saveUserName(user.name)
+                    sharedPreferencesViewModel.saveUserEmail(user.email)
                     sharedPreferencesViewModel.saveRegistrationFlag(true)
                     navigateFunction(navController, Route.MainScreen.route)
                 }
@@ -78,7 +82,6 @@ fun LoginScreen(
         topBar = {
             CustomTopAppBar(
                 title = stringResource(R.string.title_app_login_screen),
-                homeButtonIsNotNeeded = false,
                 scrollBehavior = scrollBehavior
             )
         }
@@ -91,6 +94,13 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CustomOutlinedTextField(
+                label = {
+                    Text(
+                        stringResource(R.string.label_email_for_registration_screen),
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                },
                 horizontalPadding = 16.dp,
                 value = email,
                 onValueChange = setEmail,
@@ -104,6 +114,13 @@ fun LoginScreen(
             )
             Spacer(Modifier.padding(16.dp))
             CustomOutlinedTextField(
+                label = {
+                    Text(
+                        stringResource(R.string.label_password_for_registration_screen),
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                },
                 horizontalPadding = 16.dp,
                 value = password,
                 onValueChange = setPassword,

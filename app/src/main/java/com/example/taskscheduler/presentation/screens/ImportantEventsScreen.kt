@@ -26,7 +26,7 @@ fun ImportantEventsScreen(navController: NavHostController) {
             topBar = {
                 CustomTopAppBar(
                     title = stringResource(R.string.title_app_important_events_screen),
-                    homeButtonIsNotNeeded = false,
+                    menuButtonNeed = true,
                     scrollBehavior = scrollBehavior,
                     buttonOpenNavigationDrawer = {
                         scope.launch { drawerState.open() }
