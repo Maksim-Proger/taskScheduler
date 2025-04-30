@@ -48,9 +48,9 @@ class AuthenticationViewModel @Inject constructor(
             try {
                 val user = loginUserUseCase(email, password)
                 _userData.value = user
-                _authResult.value = Result.success(Unit) // Успешный вход
+                _authResult.value = Result.success(Unit)
             } catch (e: Exception) {
-                _authResult.value = Result.failure(e) // Ошибка входа
+                _authResult.value = Result.failure(e)
             } finally {
                 _isLoading.value = false
             }
