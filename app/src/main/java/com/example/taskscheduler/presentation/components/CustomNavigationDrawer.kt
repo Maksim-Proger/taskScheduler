@@ -4,10 +4,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
@@ -23,14 +23,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.taskscheduler.R
-import com.example.taskscheduler.domain.models.DrawerItem
-import com.example.taskscheduler.domain.models.UserData
-import com.example.taskscheduler.presentation.navigation.Route
+import com.example.taskscheduler.presentation.components.items.drawerItemList
 import com.example.taskscheduler.presentation.viewmodels.SharedPreferencesViewModel
 import com.example.taskscheduler.utils.navigateFunction
 import kotlinx.coroutines.CoroutineScope
@@ -42,6 +38,7 @@ fun CustomNavigationDrawer(
     sharedPreferencesViewModel: SharedPreferencesViewModel = hiltViewModel(),
     content: @Composable (DrawerState, CoroutineScope) -> Unit
 ) {
+
     val items = drawerItemList()
     var selectedItem by remember { mutableStateOf(items[0]) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -59,25 +56,42 @@ fun CustomNavigationDrawer(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 64.dp),
+                        .padding(vertical = 35.dp)
+                        .padding(start = 25.dp),
                     contentAlignment = Alignment.CenterStart
                 ) {
                     Column {
                         userName?.let {
                             Text(
-                                text = it
+                                text = it,
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                style = MaterialTheme.typography.headlineLarge
                             )
                         }
                         userEmail?.let {
                             Text(
-                                text = it
+                                text = it,
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                style = MaterialTheme.typography.bodyMedium
                             )
                         }
                     }
                 }
                 items.forEach { item ->
                     NavigationDrawerItem(
-                        label = { Text(text = item.label) },
+                        icon = {
+                            Icon(
+                                imageVector = item.icon,
+                                contentDescription = null
+                            )
+                        },
+                        label = {
+                            Text(
+                                text = item.label,
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        },
                         selected = item == selectedItem,
                         onClick = {
                             navigateFunction(navController, item.direction)
@@ -94,30 +108,4 @@ fun CustomNavigationDrawer(
     }
 }
 
-@Composable
-private fun drawerItemList(): List<DrawerItem> {
-    val items = listOf(
-        DrawerItem(
-            direction = Route.AccountingScreen.route,
-            icon = Icons.Default.Star,
-            label = stringResource(R.string.accounting)
-        ),
-        DrawerItem(
-            direction = Route.TasksScreen.route,
-            icon = Icons.Default.Star,
-            label = stringResource(R.string.tasks)
-        ),
-        DrawerItem(
-            direction = Route.ImportantEventsScreen.route,
-            icon = Icons.Default.Star,
-            label = stringResource(R.string.important_events)
-        ),
-        DrawerItem(
-            direction = Route.PasswordsScreen.route,
-            icon = Icons.Default.Star,
-            label = stringResource(R.string.passwords)
-        ),
-    )
-    return items
-}
 

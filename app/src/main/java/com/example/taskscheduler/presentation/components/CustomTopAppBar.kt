@@ -47,9 +47,7 @@ fun CustomTopAppBar(
         },
         navigationIcon = {
             if (menuButtonNeed) {
-                IconButton(
-                    onClick = buttonOpenNavigationDrawer
-                ) {
+                IconButton(onClick = buttonOpenNavigationDrawer) {
                     Icon(
                         Icons.Default.Menu,
                         contentDescription = "Меню",
