@@ -30,9 +30,7 @@ fun MainScreen(
                     title = stringResource(R.string.title_app_main_screen),
                     menuButtonNeed = true,
                     scrollBehavior = scrollBehavior,
-                    buttonOpenNavigationDrawer = {
-                        scope.launch { drawerState.open() }
-                    }
+                    buttonOpenNavigationDrawer = { scope.launch { drawerState.open() } }
                 )
             }
         ) { innerPadding ->
