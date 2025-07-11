@@ -9,12 +9,14 @@
     <string name="title_app_tasks_screen">Задачи</string>
     <string name="title_app_important_events_screen">Важные события</string>
     <string name="title_app_passwords_screen">Пароли</string>
+    <string name="title_app_settings_screen">Настройки</string>
 
     <!--  DrawerItem  -->
     <string name="accounting">Бухгалтерия</string>
     <string name="tasks">Задачи</string>
     <string name="important_events">Важные события</string>
     <string name="passwords">Пароли</string>
+    <string name="settings">Настройки</string>
 
     <!--  The button titles  -->
     <string name="button_registration_for_login_screen">Регистрация</string>

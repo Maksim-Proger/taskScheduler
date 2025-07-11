@@ -1,7 +1,11 @@
 package com.example.taskscheduler.presentation.components.items
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBalance
+import androidx.compose.material.icons.filled.Password
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Task
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.taskscheduler.R
@@ -13,12 +17,12 @@ fun drawerItemList(): List<DrawerItem> {
     return listOf(
         DrawerItem(
             direction = Route.AccountingScreen.route,
-            icon = Icons.Default.Star,
+            icon = Icons.Default.AccountBalance,
             label = stringResource(R.string.accounting)
         ),
         DrawerItem(
             direction = Route.TasksScreen.route,
-            icon = Icons.Default.Star,
+            icon = Icons.Default.Task,
             label = stringResource(R.string.tasks)
         ),
         DrawerItem(
@@ -28,8 +32,13 @@ fun drawerItemList(): List<DrawerItem> {
         ),
         DrawerItem(
             direction = Route.PasswordsScreen.route,
-            icon = Icons.Default.Star,
+            icon = Icons.Default.Password,
             label = stringResource(R.string.passwords)
+        ),
+        DrawerItem(
+            direction = Route.SettingsScreen.route,
+            icon = Icons.Default.Settings,
+            label = stringResource(R.string.settings)
         ),
     )
 }

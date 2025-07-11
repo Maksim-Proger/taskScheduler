@@ -11,6 +11,7 @@ import com.example.taskscheduler.presentation.screens.MainScreen
 import com.example.taskscheduler.presentation.screens.PasswordsScreen
 import com.example.taskscheduler.presentation.screens.TasksScreen
 import com.example.taskscheduler.presentation.screens.system.RegistrationScreen
+import com.example.taskscheduler.presentation.screens.system.SettingsScreen
 
 @Composable
 fun NavGraph(startDestination: String) {
@@ -26,5 +27,6 @@ fun NavGraph(startDestination: String) {
         composable(Route.ImportantEventsScreen.route) { ImportantEventsScreen(navController) }
         composable(Route.PasswordsScreen.route) { PasswordsScreen(navController) }
         composable(Route.TasksScreen.route) { TasksScreen(navController) }
+        composable(Route.SettingsScreen.route) { SettingsScreen(navController) }
     }
 }

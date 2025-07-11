@@ -2,6 +2,7 @@ package com.example.taskscheduler.presentation.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerState
@@ -26,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.taskscheduler.presentation.components.items.drawerItemList
 import com.example.taskscheduler.presentation.viewmodels.SharedPreferencesViewModel
 import com.example.taskscheduler.utils.navigateFunction
@@ -40,7 +42,11 @@ fun CustomNavigationDrawer(
 ) {
 
     val items = drawerItemList()
-    var selectedItem by remember { mutableStateOf(items[0]) }
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+    val selectedItem = items.find { it.direction == currentRoute } ?: items[0]
+
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -96,7 +102,6 @@ fun CustomNavigationDrawer(
                         onClick = {
                             navigateFunction(navController, item.direction)
                             scope.launch { drawerState.close() }
-                            selectedItem = item
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                     )
@@ -107,5 +112,3 @@ fun CustomNavigationDrawer(
         content(drawerState, scope)
     }
 }
-
-
