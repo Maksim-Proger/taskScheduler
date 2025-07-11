@@ -1,8 +1,9 @@
 package com.example.taskscheduler.data.repository.firebase
 
-import com.example.taskscheduler.domain.models.UserData
+import com.example.taskscheduler.domain.models.UserDomainModel
 import com.example.taskscheduler.domain.repository.firebase.AuthenticationRepository
 import com.example.taskscheduler.utils.NODE_LIST_USERS
+import com.example.taskscheduler.utils.NODE_PERSONAL_INFORMATION
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -21,7 +22,12 @@ class AuthenticationRepositoryImpl @Inject constructor(
             "name" to name,
             "email" to email
         )
-        databaseReference.child(NODE_LIST_USERS).child(userId).setValue(user).await()
+        databaseReference
+            .child(NODE_LIST_USERS)
+            .child(userId)
+            .child(NODE_PERSONAL_INFORMATION)
+            .setValue(user)
+            .await()
     }
 
     // Регистрация нового пользователя
@@ -40,7 +46,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
     }
 
     // Вход в аккаунт
-    override suspend fun loginUser(email: String, password: String): UserData {
+    override suspend fun loginUser(email: String, password: String): UserDomainModel {
         try {
             val authResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             val user = authResult.user ?: throw Exception("User is null")
@@ -50,7 +56,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
             val name = snapshot.child("name").value as? String ?: "Unknown"
             val emailFromDb = snapshot.child("email").value as? String ?: user.email.orEmpty()
 
-            return UserData(user.uid, name, emailFromDb)
+            return UserDomainModel(user.uid, name, emailFromDb)
         } catch (e: Exception) {
             val errorMessage = when (e) {
                 is FirebaseAuthInvalidUserException -> "User not found"

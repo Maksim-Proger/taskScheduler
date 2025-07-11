@@ -2,7 +2,7 @@ package com.example.taskscheduler.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.taskscheduler.domain.models.UserData
+import com.example.taskscheduler.domain.models.UserDomainModel
 import com.example.taskscheduler.domain.usecase.firebase.LoginUserUseCase
 import com.example.taskscheduler.domain.usecase.firebase.LogoutUserUseCase
 import com.example.taskscheduler.domain.usecase.firebase.RegisterUserUseCase
@@ -25,8 +25,8 @@ class AuthenticationViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
 
-    private val _userData = MutableStateFlow<UserData?>(null)
-    val userData = _userData.asStateFlow()
+    private val _userDomainModel = MutableStateFlow<UserDomainModel?>(null)
+    val userData = _userDomainModel.asStateFlow()
 
     fun registerUser(email: String, password: String, name: String) {
         viewModelScope.launch {
@@ -47,7 +47,7 @@ class AuthenticationViewModel @Inject constructor(
             _isLoading.value = true
             try {
                 val user = loginUserUseCase(email, password)
-                _userData.value = user
+                _userDomainModel.value = user
                 _authResult.value = Result.success(Unit)
             } catch (e: Exception) {
                 _authResult.value = Result.failure(e)

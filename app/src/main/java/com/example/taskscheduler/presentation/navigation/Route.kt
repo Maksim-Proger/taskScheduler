@@ -10,4 +10,5 @@ sealed class Route(
     data object ImportantEventsScreen : Route(route = "important_events_screen")
     data object PasswordsScreen : Route(route = "passwords_screen")
     data object TasksScreen : Route(route = "tasks_screen")
+    data object SettingsScreen : Route(route = "settings_screen")
 }

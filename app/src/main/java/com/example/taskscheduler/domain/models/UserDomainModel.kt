@@ -1,6 +1,6 @@
 package com.example.taskscheduler.domain.models
 
-data class UserData(
+data class UserDomainModel(
     val userId: String,
     val name: String,
     val email: String

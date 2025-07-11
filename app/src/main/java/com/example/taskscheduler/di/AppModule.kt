@@ -2,8 +2,10 @@ package com.example.taskscheduler.di
 
 import android.content.Context
 import com.example.taskscheduler.data.repository.firebase.AuthenticationRepositoryImpl
+import com.example.taskscheduler.data.repository.firebase.ImportantEventsRepositoryImpl
 import com.example.taskscheduler.data.repository.system.SharedPreferencesRepositoryImpl
 import com.example.taskscheduler.domain.repository.firebase.AuthenticationRepository
+import com.example.taskscheduler.domain.repository.firebase.ImportantEventsRepository
 import com.example.taskscheduler.domain.repository.system.SystemSharedPreferencesRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -58,6 +60,14 @@ object AppModule {
         firebaseAuth: FirebaseAuth
     ): AuthenticationRepository {
         return AuthenticationRepositoryImpl(databaseReference, firebaseAuth)
+    }
+
+    @Provides
+    @Singleton
+    fun provideImportantEventsRepository(
+        databaseReference: DatabaseReference
+    ) : ImportantEventsRepository {
+        return ImportantEventsRepositoryImpl(databaseReference)
     }
 
     // endregion
