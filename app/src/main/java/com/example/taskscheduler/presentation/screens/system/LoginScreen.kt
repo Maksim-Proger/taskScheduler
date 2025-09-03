@@ -40,7 +40,7 @@ import com.example.taskscheduler.presentation.components.CustomTopAppBar
 import com.example.taskscheduler.presentation.navigation.Route
 import com.example.taskscheduler.presentation.theme.TaskSchedulerTheme
 import com.example.taskscheduler.presentation.viewmodels.AuthenticationViewModel
-import com.example.taskscheduler.presentation.viewmodels.SharedPreferencesViewModel
+import com.example.taskscheduler.presentation.viewmodels.SPViewModel
 import com.example.taskscheduler.utils.navigateFunction
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,7 +48,7 @@ import com.example.taskscheduler.utils.navigateFunction
 fun LoginScreen(
     navController: NavHostController,
     authenticationViewModel: AuthenticationViewModel = hiltViewModel(),
-    sharedPreferencesViewModel: SharedPreferencesViewModel = hiltViewModel()
+    SPViewModel: SPViewModel = hiltViewModel()
 ) {
     val userData by authenticationViewModel.userData.collectAsState()
     val loginResult by authenticationViewModel.authResult.collectAsState()
@@ -64,10 +64,10 @@ fun LoginScreen(
         loginResult?.let {
             if (it.isSuccess) {
                 userData?.let { user ->
-                    sharedPreferencesViewModel.saveUserId(user.userId)
-                    sharedPreferencesViewModel.saveUserName(user.name)
-                    sharedPreferencesViewModel.saveUserEmail(user.email)
-                    sharedPreferencesViewModel.saveRegistrationFlag(true)
+                    SPViewModel.saveUserId(user.userId)
+                    SPViewModel.saveUserName(user.name)
+                    SPViewModel.saveUserEmail(user.email)
+                    SPViewModel.saveRegistrationFlag(true)
                     navigateFunction(navController, Route.MainScreen.route)
                 }
             } else {

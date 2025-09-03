@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.example.taskscheduler"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.taskscheduler"
@@ -31,12 +31,8 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
+    kotlin {
+        jvmToolchain(17)
     }
     buildFeatures {
         compose = true
@@ -49,10 +45,14 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
-    // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.16.0"))
-    implementation("com.google.firebase:firebase-database:21.0.0")
-    implementation("com.google.firebase:firebase-auth-ktx")
+    // Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:34.2.0"))
+
+    // Firebase Realtime Database
+    implementation("com.google.firebase:firebase-database")
+
+    // Firebase Auth
+    implementation("com.google.firebase:firebase-auth")
 
     // Dagger Hilt
     implementation(libs.dagger.hilt)

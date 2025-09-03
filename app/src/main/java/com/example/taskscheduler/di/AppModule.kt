@@ -3,13 +3,13 @@ package com.example.taskscheduler.di
 import android.content.Context
 import com.example.taskscheduler.data.repository.firebase.AuthenticationRepositoryImpl
 import com.example.taskscheduler.data.repository.firebase.ImportantEventsRepositoryImpl
-import com.example.taskscheduler.data.repository.system.SharedPreferencesRepositoryImpl
+import com.example.taskscheduler.data.repository.system.SPRepositoryImpl
 import com.example.taskscheduler.domain.repository.firebase.AuthenticationRepository
 import com.example.taskscheduler.domain.repository.firebase.ImportantEventsRepository
-import com.example.taskscheduler.domain.repository.system.SystemSharedPreferencesRepository
+import com.example.taskscheduler.domain.repository.system.SPRepository
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.Firebase
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
@@ -27,8 +27,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSystemSharedPreferencesRepository(@ApplicationContext context: Context): SystemSharedPreferencesRepository {
-        return SharedPreferencesRepositoryImpl(context)
+    fun provideSPRepository(@ApplicationContext context: Context): SPRepository {
+        return SPRepositoryImpl(context)
     }
 
     // endregion

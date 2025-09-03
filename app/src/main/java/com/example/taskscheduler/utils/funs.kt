@@ -4,7 +4,6 @@ import android.content.Context
 import android.widget.Toast
 import androidx.navigation.NavHostController
 
-
 fun navigateFunction(
     navController: NavHostController,
     route: String

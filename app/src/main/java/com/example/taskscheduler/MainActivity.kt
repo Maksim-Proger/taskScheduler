@@ -9,15 +9,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.taskscheduler.presentation.navigation.NavGraph
 import com.example.taskscheduler.presentation.navigation.Route
-import com.example.taskscheduler.presentation.screens.MainScreen
 import com.example.taskscheduler.presentation.theme.TaskSchedulerTheme
-import com.example.taskscheduler.presentation.viewmodels.SharedPreferencesViewModel
+import com.example.taskscheduler.presentation.viewmodels.SPViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,8 +23,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val sharedPreferencesViewModel: SharedPreferencesViewModel = hiltViewModel()
-            val registrationFlag by sharedPreferencesViewModel.registrationFlag.collectAsState()
+            val SPViewModel: SPViewModel = hiltViewModel()
+            val registrationFlag by SPViewModel.registrationFlag.collectAsState()
 
             TaskSchedulerTheme {
                 Surface (

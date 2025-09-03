@@ -1,6 +1,6 @@
 package com.example.taskscheduler.domain.repository.system
 
-interface SystemSharedPreferencesRepository {
+interface SPRepository {
     fun saveRegistrationFlag(registrationFlag: Boolean)
     fun getRegistrationFlag(): Boolean
     fun saveUserId(userId: String)
