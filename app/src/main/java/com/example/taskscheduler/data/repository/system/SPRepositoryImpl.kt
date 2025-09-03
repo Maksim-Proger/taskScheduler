@@ -2,12 +2,12 @@ package com.example.taskscheduler.data.repository.system
 
 import android.content.Context
 import com.example.taskscheduler.data.database.sharedpreferences.SharedPreferences
-import com.example.taskscheduler.domain.repository.system.SystemSharedPreferencesRepository
+import com.example.taskscheduler.domain.repository.system.SPRepository
 import javax.inject.Inject
 
-class SharedPreferencesRepositoryImpl @Inject constructor(
+class SPRepositoryImpl @Inject constructor(
     private val context: Context
-) : SystemSharedPreferencesRepository {
+) : SPRepository {
 
     override fun saveRegistrationFlag(registrationFlag: Boolean) {
         SharedPreferences.saveRegistrationFlag(context, registrationFlag)

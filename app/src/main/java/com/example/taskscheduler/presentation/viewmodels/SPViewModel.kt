@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SharedPreferencesViewModel @Inject constructor(
+class SPViewModel @Inject constructor(
     private val saveRegistrationFlagUseCase: SaveRegistrationFlagUseCase,
     private val getRegistrationFlagUseCase: GetRegistrationFlagUseCase,
     private val saveUserIdUseCase: SaveUserIdUseCase,
