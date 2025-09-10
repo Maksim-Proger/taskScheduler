@@ -7,42 +7,46 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.taskscheduler.R
-import com.example.taskscheduler.presentation.components.CustomNavigationDrawer
-import com.example.taskscheduler.presentation.components.CustomTopAppBar
+import com.example.taskscheduler.utils.navigateFunction
+import com.example.ui.presentation.components.CustomNavigationDrawer
+import com.example.ui.presentation.components.CustomTopAppBar
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(navController: NavHostController) {
+fun SettingsScreen(
+    navController: NavHostController,
+    openDrawer: () -> Unit
+) {
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
-    CustomNavigationDrawer(navController) { drawerState, scope ->
-        Scaffold(
-            topBar = {
-                CustomTopAppBar(
-                    title = stringResource(R.string.title_app_settings_screen),
-                    menuButtonNeed = true,
-                    scrollBehavior = scrollBehavior,
-                    buttonOpenNavigationDrawer = {
-                        scope.launch { drawerState.open() }
-                    }
-                )
-            }
-        ) { innerPadding ->
+    Scaffold(
+        topBar = {
+            CustomTopAppBar(
+                title = stringResource(R.string.title_app_settings_screen),
+                menuButtonNeed = true,
+                scrollBehavior = scrollBehavior,
+                buttonOpenNavigationDrawer = openDrawer
+            )
+        }
+    ) { innerPadding ->
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-            ) {
-
-            }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
 
         }
+
     }
+
+
 }
