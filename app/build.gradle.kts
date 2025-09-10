@@ -17,7 +17,7 @@ android {
         minSdk = 29
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "2.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,20 +41,21 @@ android {
 
 dependencies {
 
+    // Modules
+    implementation(project(":auth"))
+    implementation(project(":ui"))
+    implementation(project(":core"))
+
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
-    // Firebase BoM
+    // Firebase
     implementation(platform("com.google.firebase:firebase-bom:34.2.0"))
-
-    // Firebase Realtime Database
     implementation("com.google.firebase:firebase-database")
-
-    // Firebase Auth
     implementation("com.google.firebase:firebase-auth")
 
-    // Dagger Hilt
+    // Navigation + Hilt
     implementation(libs.dagger.hilt)
     kapt(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)

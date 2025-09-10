@@ -21,3 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Task Scheduler"
 include(":app")
+include(":auth")
+include(":ui")
+include(":core")

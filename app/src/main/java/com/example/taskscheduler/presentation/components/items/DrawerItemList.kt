@@ -2,19 +2,25 @@ package com.example.taskscheduler.presentation.components.items
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalance
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Password
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Task
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import com.example.ui.presentation.components.items.DrawerItem
 import com.example.taskscheduler.R
-import com.example.taskscheduler.domain.models.DrawerItem
 import com.example.taskscheduler.presentation.navigation.Route
 
 @Composable
 fun drawerItemList(): List<DrawerItem> {
     return listOf(
+        DrawerItem(
+            direction = Route.MainScreen.route,
+            icon = Icons.Default.Home,
+            label = stringResource(R.string.main_screen)
+        ),
         DrawerItem(
             direction = Route.AccountingScreen.route,
             icon = Icons.Default.AccountBalance,
