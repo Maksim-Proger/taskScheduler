@@ -7,6 +7,7 @@ import javax.inject.Inject
 class ImportantEventsRepositoryImpl @Inject constructor(
     private val databaseReference: DatabaseReference
 ) : ImportantEventsRepository {
+
     override suspend fun addNewEvent(userId: String) {
         TODO("Not yet implemented")
     }
